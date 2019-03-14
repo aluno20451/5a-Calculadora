@@ -1,0 +1,49 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>A minha Calculadora</h2>
+
+@* Defenir o formulario *@
+@using (Html.BeginForm())
+{
+    <div>
+
+        <table>
+            <tr>
+                <td colspan="5"><input type="text" name="visor" value="0" style="width:210px" readonly/></td>
+            </tr>
+            <tr>
+                <td><input type="submit" name="bt" value="7" style="width:40px; height:40px" /></td>
+                <td><input type="submit" name="bt" value="8" style="width:40px; height:40px" /></td>
+                <td><input type="submit" name="bt" value="9" style="width:40px;height:40px" /></td>
+                <td><input type="submit" name="bt" value="/" style="width:40px;height:40px" /></td>
+                <td><input type="submit" name="bt" value="+/-" style="width:40px;height:40px" /></td>
+            </tr>
+            <tr>
+                <td><input type="submit" name="bt" value="4" style="width:40px;height:40px" /></td>
+                <td><input type="submit" name="bt" value="5" style="width:40px;height:40px" /></td>
+                <td><input type="submit" name="bt" value="6" style="width:40px;height:40px"  /></td>
+                <td><input type="submit" name="bt" value="*" style="width:40px;height:40px" /></td>
+                <td><input type="submit" name="bt" value="C" style="width:40px;height:40px" /></td>
+            </tr>
+            <tr>
+                <td><input type="submit" name="bt" value="1" style="width:40px;height:40px" /></td>
+                <td><input type="submit" name="bt" value="2" style="width:40px;height:40px" /></td>
+                <td><input type="submit" name="bt" value="3" style="width:40px;height:40px" /></td>
+                <td><input type="submit" name="bt" value="-" style="width:40px;height:40px" /></td>
+                <td rowspan="2"><input type="submit" name="bt" value="=" style="width:40px; height:80px" /></td>
+            </tr>
+            <tr>
+                <td colspan="2"><input type="submit" name="bt" value="0" style="width:80px;height:40px" /></td>
+                <td><input type="submit" name="bt" value="," style="width:40px;height:40px" /></td>
+                <td><input type="submit" name="bt" value="+" style="width:40px;height:40px" /></td>
+            </tr>
+
+        </table>
+
+    </div>
+ 
+}   
+
