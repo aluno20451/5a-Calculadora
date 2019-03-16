@@ -14,8 +14,7 @@ namespace Calculadora.Controllers
             //inicializa a viewBag a '0'
             ViewBag.Ecra = "0";
             Session["primeiraVezOperador"] = true;
-            Session["operador"] = "";
-
+            Session["teste"] = true;
             return View();
         }
 
