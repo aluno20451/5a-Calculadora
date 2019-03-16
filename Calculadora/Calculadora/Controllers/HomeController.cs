@@ -14,6 +14,8 @@ namespace Calculadora.Controllers
             //inicializa a viewBag a '0'
             ViewBag.Ecra = "0";
             Session["primeiraVezOperador"] = true;
+            Session["operador"] = "";
+
             return View();
         }
 
@@ -57,9 +59,11 @@ namespace Calculadora.Controllers
                 case "-":
                 case "*":
                 case "/":
-                    if ((bool) Session["primeiraVezOperador"] == true)
+                    if ((bool)Session["primeiraVezOperador"] == true)
                     {
                         Session["primeiraVezOperador"] = false;
+                    }
+                    else {
                     }
                     break;
             }
