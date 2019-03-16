@@ -136,9 +136,10 @@ namespace Calculadora.Controllers
                         Session["aux"] = 0;
                         break;
                     }
+
                 case "C":
                     Session["primeiraVezOperador"] = true;
-                    Session["write"] = false;
+                    Session["write"] = true;
                     Session["op"] = "";
                     Session["aux"] = 0;
                     ecra = "0";
