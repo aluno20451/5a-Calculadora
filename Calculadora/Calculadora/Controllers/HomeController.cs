@@ -14,7 +14,9 @@ namespace Calculadora.Controllers
             //inicializa a viewBag a '0'
             ViewBag.Ecra = "0";
             Session["primeiraVezOperador"] = true;
-            Session["teste1"] = false;
+            Session["write"] = true;
+            Session["op"] = "";
+            Session["aux"] = 0;
             return View();
         }
 
@@ -40,10 +42,15 @@ namespace Calculadora.Controllers
                     // se entrei aqui, é pq foi selecionado um 'algarismo'
                     // vou decidir o que fazer qd no visor só existir o 'zero'
                     if (visor == "0") // if(visor.equals("0"))
-                    { 
+                    {
                         ecra = bt;
                     }
-                    else {
+                    else if (!(bool)Session["write"]) {
+                        ecra = bt;
+                        Session["write"] = true;
+                    }
+                    else
+                    {
                         ecra = visor + bt;
                     }
                     break;
@@ -58,12 +65,83 @@ namespace Calculadora.Controllers
                 case "-":
                 case "*":
                 case "/":
-                    if ((bool)Session["primeiraVezOperador"] == true)
+                    if ((bool)Session["primeiraVezOperador"])
                     {
                         Session["primeiraVezOperador"] = false;
+                        Session["op"] = bt;
+                        Session["aux"] = Convert.ToDouble(visor);
+                        Session["write"] = false;
                     }
-                    else {
+                    else
+                    {
+                        Session["write"] = false;
+                        switch ((String)Session["op"])
+                        {
+                            case "+":
+                                Session["aux"] = (double)Session["aux"] + Convert.ToDouble(visor);
+                                break;
+                            case "-":
+                                Session["aux"] = (double)Session["aux"] - Convert.ToDouble(visor);
+                                break;
+                            case "*":
+                                Session["aux"] = (double)Session["aux"] * Convert.ToDouble(visor);
+                                break;
+                            case "/":
+                                if (visor == "0")
+                                    ecra = "Nao te armes em esperto amigo";
+                                else
+                                {
+                                    Session["aux"] = (double)Session["aux"] / Convert.ToDouble(visor);
+                                }
+                            break;
+                        }
+                        Session["op"] = bt;
                     }
+                    break;
+
+                //ao carregar no igual
+                case "=":
+                    String op = (String)Session["op"];
+                    if ( op == "") {
+                        break;
+                    }
+                    else
+                    {
+                        switch ((String)Session["op"])
+                        {
+                            case "+":
+                                Session["aux"] = (double)Session["aux"] + Convert.ToDouble(visor);
+                                break;
+                            case "-":
+                                Session["aux"] = (double)Session["aux"] - Convert.ToDouble(visor);
+                                break;
+                            case "*":
+                                Session["aux"] = (double)Session["aux"] * Convert.ToDouble(visor);
+                                break;
+                            case "/":
+                                if (visor == "0")
+                                    ecra = "Nao te armes em esperto amigo";
+                                else
+                                {
+                                    Session["aux"] = (double)Session["aux"] / Convert.ToDouble(visor);
+                                }
+                                break;
+                        }
+
+                        ecra = Convert.ToString(Session["aux"]);
+
+                        Session["primeiraVezOperador"] = true;
+                        Session["write"] = false;
+                        Session["op"] = "";
+                        Session["aux"] = 0;
+                        break;
+                    }
+                case "C":
+                    Session["primeiraVezOperador"] = true;
+                    Session["write"] = false;
+                    Session["op"] = "";
+                    Session["aux"] = 0;
+                    ecra = "0";
                     break;
             }
             ViewBag.Ecra = ecra;
