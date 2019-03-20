@@ -29,6 +29,20 @@ namespace Calculadora.Controllers
 
             //identificar o valor da variável "bt"
             switch (bt) {
+                case "+/-":
+                    if (visor != "0")
+                    {
+                        if (!visor.Contains("-"))
+                        {
+                            ecra = "-" + visor;
+                        }
+                        else
+                        {
+                            ecra = visor.Replace("-", "");
+                        }
+                    }
+                break;
+
                 case "0":
                 case "1":
                 case "2":
@@ -87,8 +101,7 @@ namespace Calculadora.Controllers
                                 Session["aux"] = (double)Session["aux"] * Convert.ToDouble(visor);
                                 break;
                             case "/":
-                                if (visor == "0")
-                                    ecra = "Nao te armes em esperto amigo";
+                                if (visor == "0"){ }
                                 else
                                 {
                                     Session["aux"] = (double)Session["aux"] / Convert.ToDouble(visor);
