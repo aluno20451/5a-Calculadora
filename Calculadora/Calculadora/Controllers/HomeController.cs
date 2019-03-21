@@ -13,7 +13,7 @@ namespace Calculadora.Controllers
         {
             //inicializa a viewBag a '0'
             ViewBag.Ecra = "0";
-            Session["primeiraVezOperador"] = true;
+            Session["lastInput"] = "";
             Session["write"] = true;
             Session["op"] = "";
             Session["aux"] = 0;
@@ -67,11 +67,13 @@ namespace Calculadora.Controllers
                     {
                         ecra = visor + bt;
                     }
+                    Session["lastInput"] = "num";
                     break;
                 case ",":
                     if (!visor.Contains(",")) {
                         ecra = visor + bt;
                     }
+                    Session["lastInput"] = ",";
                     break;
 
                 // se entrar aqui é pq selecionou um operador
@@ -79,12 +81,14 @@ namespace Calculadora.Controllers
                 case "-":
                 case "*":
                 case "/":
-                    if ((bool)Session["primeiraVezOperador"])
+                    if ((String)Session["op"] == "")
                     {
                         Session["primeiraVezOperador"] = false;
                         Session["op"] = bt;
                         Session["aux"] = Convert.ToDouble(visor);
                         Session["write"] = false;
+                    }
+                    else if ((String)Session["op"] != "" && (String)Session["lastInput"] == "op") {
                     }
                     else
                     {
@@ -101,15 +105,17 @@ namespace Calculadora.Controllers
                                 Session["aux"] = (double)Session["aux"] * Convert.ToDouble(visor);
                                 break;
                             case "/":
-                                if (visor == "0"){ }
+                                if (visor == "0") { }
                                 else
                                 {
                                     Session["aux"] = (double)Session["aux"] / Convert.ToDouble(visor);
                                 }
-                            break;
+                                break;
                         }
+                        ecra = Convert.ToString((Double)Session["aux"]);
                         Session["op"] = bt;
                     }
+                    Session["lastInput"] = "op";
                     break;
 
                 //ao carregar no igual
@@ -133,7 +139,7 @@ namespace Calculadora.Controllers
                                 break;
                             case "/":
                                 if (visor == "0")
-                                    ecra = "Nao te armes em esperto amigo";
+                                { }
                                 else
                                 {
                                     Session["aux"] = (double)Session["aux"] / Convert.ToDouble(visor);
@@ -147,6 +153,7 @@ namespace Calculadora.Controllers
                         Session["write"] = false;
                         Session["op"] = "";
                         Session["aux"] = 0;
+                        Session["lastInput"] = "=";
                         break;
                     }
 
@@ -156,11 +163,14 @@ namespace Calculadora.Controllers
                     Session["op"] = "";
                     Session["aux"] = 0;
                     ecra = "0";
+                    Session["lastInput"] = "C";
+                    break;
+                default:
+                    ecra = "nabo";
                     break;
             }
             ViewBag.Ecra = ecra;
             return View();
         }
-
     }
 }
